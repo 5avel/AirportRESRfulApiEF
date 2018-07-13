@@ -8,8 +8,8 @@ namespace AirportRESRfulApi.DAL
 {
     public class StewardessesRepository : IRepository<Stewardess>
     {
-        private IAirportContext _airportContext;
-        public StewardessesRepository(IAirportContext airportContext)
+        private AirportContext _airportContext;
+        public StewardessesRepository(AirportContext airportContext)
         {
             _airportContext = airportContext;
         }
@@ -30,7 +30,7 @@ namespace AirportRESRfulApi.DAL
         {
             var itemToRemove = _airportContext.Stewardesses.FirstOrDefault(t => t.Id == id);
             if (itemToRemove == null) return false;
-            return _airportContext.Stewardesses.Remove(itemToRemove);
+            return _airportContext.Stewardesses.Remove(itemToRemove) != null;
         }
 
         public bool Delete(Stewardess entity)
@@ -61,7 +61,7 @@ namespace AirportRESRfulApi.DAL
             var updatedEntity = _airportContext.Stewardesses?.FirstOrDefault(t => t.Id == entity.Id);
             if (updatedEntity == null) return null;
 
-            if (_airportContext.Stewardesses.Remove(updatedEntity))
+            if (_airportContext.Stewardesses.Remove(updatedEntity) != null)
             {
                 _airportContext.Stewardesses.Add(entity);
                 return entity;

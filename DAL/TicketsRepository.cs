@@ -3,25 +3,28 @@ using AirportRESRfulApi.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace AirportRESRfulApi.DAL
 {
     public class TicketsRepository : IRepository<Ticket>
     {
-        private IAirportContext _airportContext;
-        public TicketsRepository(IAirportContext airportContext)
+        private AirportContext _airportContext;
+        public TicketsRepository(AirportContext context)
         {
-            _airportContext = airportContext;
+            _airportContext = context;
         }
         public Ticket Create(Ticket entity)
         {
             _airportContext.Tickets.Add(entity);
+            _airportContext.SaveChanges();
             return entity;
         }
 
         public IEnumerable<Ticket> Create(IEnumerable<Ticket> entitys)
         {
             _airportContext.Tickets.AddRange(entitys);
+            _airportContext.SaveChanges();
             return entitys;
         }
 
@@ -29,7 +32,7 @@ namespace AirportRESRfulApi.DAL
         {
             var itemToRemove = _airportContext.Tickets.FirstOrDefault(t => t.Id == id);
             if (itemToRemove == null) return false;
-            return _airportContext.Tickets.Remove(itemToRemove);
+            return _airportContext.Tickets.Remove(itemToRemove) != null;
         }
 
         public bool Delete(Ticket entity)
@@ -60,7 +63,7 @@ namespace AirportRESRfulApi.DAL
             var updatedEntity = _airportContext.Tickets?.FirstOrDefault(t => t.Id == entity.Id);
             if (updatedEntity == null) return null;
 
-            if(_airportContext.Tickets.Remove(updatedEntity))
+            if(_airportContext.Tickets.Remove(updatedEntity) != null)
             {
                 _airportContext.Tickets.Add(entity);
                 return entity;

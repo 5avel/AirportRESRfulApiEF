@@ -83,7 +83,7 @@ namespace AirportRESRfulApi.BLL.Services
                 tickets.Add(
                     new TicketDto
                     {
-                        Id = ++startID,
+                        
                         FlightId = flightId,
                         FlightNumber = flightNumber,
                         IsSold = false,

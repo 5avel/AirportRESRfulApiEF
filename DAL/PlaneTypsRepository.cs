@@ -8,29 +8,30 @@ namespace AirportRESRfulApi.DAL
 {
     public class PlaneTypsRepository : IRepository<PlaneType>
     {
-        private IAirportContext _airportContext;
-        public PlaneTypsRepository(IAirportContext airportContext)
+        private AirportContext _airportContext;
+        public PlaneTypsRepository(AirportContext airportContext)
         {
             _airportContext = airportContext;
         }
 
         public PlaneType Create(PlaneType entity)
         {
-            _airportContext.PlaneTyps.Add(entity);
+            _airportContext.PlaneTypes.Add(entity);
+            _airportContext.SaveChanges();
             return entity;
         }
 
         public IEnumerable<PlaneType> Create(IEnumerable<PlaneType> entitys)
         {
-            _airportContext.PlaneTyps.AddRange(entitys);
+            _airportContext.PlaneTypes.AddRange(entitys);
             return entitys;
         }
 
         public bool Delete(int id)
         {
-            var itemToRemove = _airportContext.PlaneTyps.FirstOrDefault(t => t.Id == id);
+            var itemToRemove = _airportContext.PlaneTypes.FirstOrDefault(t => t.Id == id);
             if (itemToRemove == null) return false;
-            return _airportContext.PlaneTyps.Remove(itemToRemove);
+            return _airportContext.PlaneTypes.Remove(itemToRemove) != null;
         }
 
         public bool Delete(PlaneType entity)
@@ -41,29 +42,29 @@ namespace AirportRESRfulApi.DAL
 
         public IEnumerable<PlaneType> Find(Func<PlaneType, bool> predicate)
         {
-            return _airportContext.PlaneTyps?.Where(predicate);
+            return _airportContext.PlaneTypes?.Where(predicate);
         }
 
         public IEnumerable<PlaneType> GetAll()
         {
-            return _airportContext.PlaneTyps;
+            return _airportContext.PlaneTypes;
         }
 
         public PlaneType GetById(int id)
         {
-            return _airportContext.PlaneTyps?.FirstOrDefault(t => t.Id == id);
+            return _airportContext.PlaneTypes?.FirstOrDefault(t => t.Id == id);
         }
 
         public PlaneType Update(PlaneType entity)
         {
             if (entity == null) return null;
 
-            var updatedEntity = _airportContext.PlaneTyps?.FirstOrDefault(t => t.Id == entity.Id);
+            var updatedEntity = _airportContext.PlaneTypes?.FirstOrDefault(t => t.Id == entity.Id);
             if (updatedEntity == null) return null;
 
-            if (_airportContext.PlaneTyps.Remove(updatedEntity))
+            if (_airportContext.PlaneTypes.Remove(updatedEntity) != null)
             {
-                _airportContext.PlaneTyps.Add(entity);
+                _airportContext.PlaneTypes.Add(entity);
                 return entity;
             }
             return null;
