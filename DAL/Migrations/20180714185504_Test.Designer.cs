@@ -4,14 +4,16 @@ using AirportRESRfulApi.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AirportRESRfulApi.DAL.Migrations
 {
     [DbContext(typeof(AirportContext))]
-    partial class AirportContextModelSnapshot : ModelSnapshot
+    [Migration("20180714185504_Test")]
+    partial class Test
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -183,7 +185,7 @@ namespace AirportRESRfulApi.DAL.Migrations
 
                     b.Property<int>("Seats");
 
-                    b.Property<long>("ServiceLifeInTicks");
+                    b.Property<TimeSpan>("ServiceLife");
 
                     b.HasKey("Id");
 
@@ -193,9 +195,9 @@ namespace AirportRESRfulApi.DAL.Migrations
                     b.ToTable("PlaneTypes");
 
                     b.HasData(
-                        new { Id = 1, Capacity = 5000, Model = "AN140", PlaneId = 1, Range = 2345, Seats = 23, ServiceLifeInTicks = 172800000000000L },
-                        new { Id = 2, Capacity = 5000, Model = "IL235", PlaneId = 2, Range = 2345, Seats = 23, ServiceLifeInTicks = 216000000000000L },
-                        new { Id = 3, Capacity = 5000, Model = "A380", PlaneId = 3, Range = 2345, Seats = 23, ServiceLifeInTicks = 259200000000000L }
+                        new { Id = 1, Capacity = 5000, Model = "AN140", PlaneId = 1, Range = 2345, Seats = 23, ServiceLife = new TimeSpan(200, 0, 0, 0, 0) },
+                        new { Id = 2, Capacity = 5000, Model = "IL235", PlaneId = 2, Range = 2345, Seats = 23, ServiceLife = new TimeSpan(250, 0, 0, 0, 0) },
+                        new { Id = 3, Capacity = 5000, Model = "A380", PlaneId = 3, Range = 2345, Seats = 23, ServiceLife = new TimeSpan(300, 0, 0, 0, 0) }
                     );
                 });
 

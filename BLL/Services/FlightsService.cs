@@ -3,20 +3,31 @@ using AirportRESRfulApi.DAL.Interfaces;
 using AirportRESRfulApi.DAL.Models;
 using AirportRESRfulApi.Shared.DTO;
 using AutoMapper;
-using System.Linq;
-using System.Collections.Generic;
-using System;
 using FluentValidation;
+using System;
+using System.Linq;
 
 namespace AirportRESRfulApi.BLL.Services
 {
     public class FlightsService : Service<Flight, FlightDto>, IFlightsService
     {
+        private IValidator<FlightDto> _validator;
 
-
-        public FlightsService(IUnitOfWork repository, IMapper mapper) : base(repository, mapper)
+        public FlightsService(IUnitOfWork repository, IMapper mapper, IValidator<FlightDto> validator) : base(repository, mapper)
         {
+            _validator = validator;
+        }
 
+        public override void Make(FlightDto entity)
+        {
+            _validator.Validate(entity);
+            base.Make(entity);
+        }
+
+        public override void Update(FlightDto entity)
+        {
+            _validator.Validate(entity);
+            base.Update(entity);
         }
 
         public FlightDto GetByFlightNumberAndDate(string flightNumber, DateTime flightDate)

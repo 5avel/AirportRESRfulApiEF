@@ -78,6 +78,34 @@ namespace AirportRESRfulApi.DAL
                 new Departure { Id = 2, FlightId = 2, FlightNumber = "KJ76", DepartureTime = Convert.ToDateTime("2018-07-13T08:22:56.6404304+03:00") },
                 new Departure { Id = 3, FlightId = 3, FlightNumber = "ER86", DepartureTime = Convert.ToDateTime("2018-07-13T08:22:56.6404304+03:00") }
                 );
+
+            builder.Entity<Crew>().HasData(
+                new Crew { Id = 1, DepartureId = 1 },
+                new Crew { Id = 2, DepartureId = 2 },
+                new Crew { Id = 3, DepartureId = 3 }
+                );
+            builder.Entity<Pilot>().HasData(
+                new Pilot { Id = 1, CrewId = 1, FirstName = "Ivan", LastName = "Ivanov", Experience = 3, Birthday = new DateTime(1987, 1, 24)},
+                new Pilot { Id = 2, CrewId = 2, FirstName = "Peta", LastName = "Penhjd", Experience = 8, Birthday = new DateTime(1987, 1, 24) },
+                new Pilot { Id = 3, CrewId = 3, FirstName = "Max", LastName = "Maximov", Experience = 6, Birthday = new DateTime(1987, 1, 24) }
+                );
+            builder.Entity<Stewardess>().HasData(
+                new Stewardess { Id = 1, CrewId = 1, FirstName = "Ivana", LastName = "Ivanova", Birthday = new DateTime(1987, 1, 24) },
+                new Stewardess { Id = 2, CrewId = 2, FirstName = "Petra", LastName = "Penhjd", Birthday = new DateTime(1987, 1, 24) },
+                new Stewardess { Id = 3, CrewId = 3, FirstName = "Maxima", LastName = "Maximova", Birthday = new DateTime(1987, 1, 24) },
+                new Stewardess { Id = 4, CrewId = 1, FirstName = "Ira", LastName = "Ivanova", Birthday = new DateTime(1987, 1, 24) },
+                new Stewardess { Id = 5, CrewId = 2, FirstName = "Lena", LastName = "Penhjd", Birthday = new DateTime(1987, 1, 24) }                   
+                );
+            builder.Entity<Plane>().HasData(
+                new Plane { Id = 1, DepartureId = 1, Name = "dfg4456", ReleaseDate = new DateTime(1995, 1, 22) },
+                new Plane { Id = 2, DepartureId = 2, Name = "QQWS1298", ReleaseDate = new DateTime(1995, 1, 22) },
+                new Plane { Id = 3, DepartureId = 3, Name = "INB677", ReleaseDate = new DateTime(1995, 1, 22) }
+                );
+            builder.Entity<PlaneType>().HasData(
+                new PlaneType { Id = 1, Model = "AN140", PlaneId = 1, Capacity = 5000, Seats = 23, Range = 2345, ServiceLife = new TimeSpan(200, 0, 0, 0) },
+                new PlaneType { Id = 2, Model = "IL235", PlaneId = 2, Capacity = 5000, Seats = 23, Range = 2345, ServiceLife = new TimeSpan(250, 0, 0, 0) },
+                new PlaneType { Id = 3, Model = "A380", PlaneId = 3, Capacity = 5000, Seats = 23, Range = 2345, ServiceLife = new TimeSpan(300, 0, 0, 0) }
+                );
         }
 
 

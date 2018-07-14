@@ -2,6 +2,8 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+
     public class PlaneType : Entity
     {
         [Required, MaxLength(50)]
@@ -13,7 +15,15 @@
         [Required]
         public int Range { set; get; }
         [Required]
-        public TimeSpan ServiceLife { set; get; }
+        public Int64 ServiceLifeInTicks { set; get; }
+       
+
+        [NotMapped]
+        public TimeSpan ServiceLife
+        {
+            get { return TimeSpan.FromTicks(ServiceLifeInTicks); }
+            set { ServiceLifeInTicks = value.Ticks; }
+        }
 
         public int PlaneId { set; get; }
     }

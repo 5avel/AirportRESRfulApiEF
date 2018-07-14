@@ -4,14 +4,16 @@ using AirportRESRfulApi.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AirportRESRfulApi.DAL.Migrations
 {
     [DbContext(typeof(AirportContext))]
-    partial class AirportContextModelSnapshot : ModelSnapshot
+    [Migration("20180714143132_AddAnnotations2")]
+    partial class AddAnnotations2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,12 +35,6 @@ namespace AirportRESRfulApi.DAL.Migrations
                         .IsUnique();
 
                     b.ToTable("Crews");
-
-                    b.HasData(
-                        new { Id = 1, DepartureId = 1 },
-                        new { Id = 2, DepartureId = 2 },
-                        new { Id = 3, DepartureId = 3 }
-                    );
                 });
 
             modelBuilder.Entity("AirportRESRfulApi.DAL.Models.Departure", b =>
@@ -129,12 +125,6 @@ namespace AirportRESRfulApi.DAL.Migrations
                         .IsUnique();
 
                     b.ToTable("Pilots");
-
-                    b.HasData(
-                        new { Id = 1, Birthday = new DateTime(1987, 1, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), CrewId = 1, Experience = 3, FirstName = "Ivan", LastName = "Ivanov" },
-                        new { Id = 2, Birthday = new DateTime(1987, 1, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), CrewId = 2, Experience = 8, FirstName = "Peta", LastName = "Penhjd" },
-                        new { Id = 3, Birthday = new DateTime(1987, 1, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), CrewId = 3, Experience = 6, FirstName = "Max", LastName = "Maximov" }
-                    );
                 });
 
             modelBuilder.Entity("AirportRESRfulApi.DAL.Models.Plane", b =>
@@ -157,12 +147,6 @@ namespace AirportRESRfulApi.DAL.Migrations
                         .IsUnique();
 
                     b.ToTable("Planes");
-
-                    b.HasData(
-                        new { Id = 1, DepartureId = 1, Name = "dfg4456", ReleaseDate = new DateTime(1995, 1, 22, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                        new { Id = 2, DepartureId = 2, Name = "QQWS1298", ReleaseDate = new DateTime(1995, 1, 22, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                        new { Id = 3, DepartureId = 3, Name = "INB677", ReleaseDate = new DateTime(1995, 1, 22, 0, 0, 0, 0, DateTimeKind.Unspecified) }
-                    );
                 });
 
             modelBuilder.Entity("AirportRESRfulApi.DAL.Models.PlaneType", b =>
@@ -183,7 +167,7 @@ namespace AirportRESRfulApi.DAL.Migrations
 
                     b.Property<int>("Seats");
 
-                    b.Property<long>("ServiceLifeInTicks");
+                    b.Property<TimeSpan>("ServiceLife");
 
                     b.HasKey("Id");
 
@@ -191,12 +175,6 @@ namespace AirportRESRfulApi.DAL.Migrations
                         .IsUnique();
 
                     b.ToTable("PlaneTypes");
-
-                    b.HasData(
-                        new { Id = 1, Capacity = 5000, Model = "AN140", PlaneId = 1, Range = 2345, Seats = 23, ServiceLifeInTicks = 172800000000000L },
-                        new { Id = 2, Capacity = 5000, Model = "IL235", PlaneId = 2, Range = 2345, Seats = 23, ServiceLifeInTicks = 216000000000000L },
-                        new { Id = 3, Capacity = 5000, Model = "A380", PlaneId = 3, Range = 2345, Seats = 23, ServiceLifeInTicks = 259200000000000L }
-                    );
                 });
 
             modelBuilder.Entity("AirportRESRfulApi.DAL.Models.Stewardess", b =>
@@ -222,14 +200,6 @@ namespace AirportRESRfulApi.DAL.Migrations
                     b.HasIndex("CrewId");
 
                     b.ToTable("Stewardesses");
-
-                    b.HasData(
-                        new { Id = 1, Birthday = new DateTime(1987, 1, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), CrewId = 1, FirstName = "Ivana", LastName = "Ivanova" },
-                        new { Id = 2, Birthday = new DateTime(1987, 1, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), CrewId = 2, FirstName = "Petra", LastName = "Penhjd" },
-                        new { Id = 3, Birthday = new DateTime(1987, 1, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), CrewId = 3, FirstName = "Maxima", LastName = "Maximova" },
-                        new { Id = 4, Birthday = new DateTime(1987, 1, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), CrewId = 1, FirstName = "Ira", LastName = "Ivanova" },
-                        new { Id = 5, Birthday = new DateTime(1987, 1, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), CrewId = 2, FirstName = "Lena", LastName = "Penhjd" }
-                    );
                 });
 
             modelBuilder.Entity("AirportRESRfulApi.DAL.Models.Ticket", b =>

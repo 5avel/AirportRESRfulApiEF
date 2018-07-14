@@ -34,6 +34,11 @@ namespace AirportRESRfulApi.DAL
             context.Set<TEntity>().Add(entity);
         }
 
+        public virtual void Create(IEnumerable<TEntity> entitys, string createdBy = null)
+        {
+            context.Set<TEntity>().AddRange(entitys);
+        }
+
         public virtual void Update(TEntity entity, string modifiedBy = null)
         {
             context.Set<TEntity>().Attach(entity);

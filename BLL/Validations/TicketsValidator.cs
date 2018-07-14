@@ -7,9 +7,20 @@ namespace AirportRESRfulApi.BLL.Validations
     {
         public TicketsValidator()
         {
-           
-
-            
+            RuleFor(x => x.FlightId)
+                .NotNull()
+                .NotEmpty();
+            RuleFor(x => x.FlightNumber)
+                .NotNull()
+                .NotEmpty()
+                .MinimumLength(3)
+                .MaximumLength(8);
+            RuleFor(x => x.PlaseNumber)
+                .NotNull()
+                .NotEmpty();
+            RuleFor(x => x.Price)
+                .NotNull()
+                .NotEmpty();
         }
     }
 }

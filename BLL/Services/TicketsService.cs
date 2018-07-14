@@ -13,75 +13,55 @@ namespace AirportRESRfulApi.BLL.Services
 {
     public class TicketsService : Service<Ticket, TicketDto>, ITicketsService
     {
-
-        public TicketsService(IUnitOfWork repository, IMapper mapper) : base(repository, mapper)
+        private IValidator<FlightDto> _validator;
+        public TicketsService(IUnitOfWork repository, IMapper mapper, IValidator<FlightDto> validator) : base(repository, mapper)
         {
+            _validator = validator;
         }
 
         public TicketDto BayById(int id)
         {
-            throw new NotImplementedException();
+            var entity = _repository.Get(x => x.Id == id).SingleOrDefault();
+
+            if (entity == null) return null;
+
+            if (entity.IsSold == true) return null; // Уже был продан
+
+            entity.IsSold = true;
+            _repository.Update(entity);
+            _unitOfWork.SaveChages();
+            return _mapper.Map<Ticket, TicketDto>(entity);
         }
 
         public IEnumerable<TicketDto> GetNotSoldSByFlightIdAndDate(string flightNumber, DateTime flightDate)
         {
-            throw new NotImplementedException();
+            Flight flight = _unitOfWork.Set<Flight>().Get().Where(x => x.FlightNumber == flightNumber & x.DepartureTime == flightDate).FirstOrDefault();
+
+            if (flight == null) return null;
+
+            var entity = _repository.Get().Where(t => t.FlightId == flight.Id);
+            return _mapper.Map<IEnumerable<Ticket>, IEnumerable<TicketDto>>(entity);
         }
 
         public bool Make(IEnumerable<TicketDto> entitys)
         {
-            throw new NotImplementedException();
+            _validator.Validate(entitys);
+            _repository.Create(Mapper.Map<IEnumerable<TicketDto>, IEnumerable<Ticket>>(entitys));
+            return true; 
         }
 
         public TicketDto ReturnById(int id)
         {
-            throw new NotImplementedException();
+            var entity = _repository.Get(x => x.Id == id).SingleOrDefault();
+
+            if (entity == null) return null;
+
+            if (entity.IsSold == false) return null;  // Уже был возвращен
+
+            entity.IsSold = false;
+            _repository.Update(entity);
+            _unitOfWork.SaveChages();
+            return _mapper.Map<Ticket, TicketDto>(entity);
         }
-
-
-
-        //public IEnumerable<TicketDto> GetNotSoldSByFlightIdAndDate(string flightNumber, DateTime flightDate)
-        //{
-        //    Flight flight = _flightsRepository.GetAll().Where(x => x.FlightNumber == flightNumber & x.DepartureTime == flightDate).FirstOrDefault();
-
-        //    if (flight == null) return null;
-
-        //    var entity = _repository.GetAll().Where(t => t.FlightId == flight.Id);
-        //    return _mapper.Map<IEnumerable<Ticket>, IEnumerable<TicketDto>>(entity);
-        //}
-
-        //public TicketDto BayById(int id)
-        //{
-        //    var entity = _repository.GetById(id);
-
-        //    if (entity == null) return null;
-
-        //    if (entity.IsSold == true) return null; // Уже был продан
-
-        //    entity.IsSold = true;
-        //    var result = _repository.Update(entity);
-
-        //    if (result == null) return null;
-
-        //    return _mapper.Map<Ticket, TicketDto>(result);
-        //}
-
-        //public TicketDto ReturnById(int id)
-        //{
-        //    var entity = _repository.GetById(id);
-
-        //    if (entity == null) return null;
-
-        //    if (entity.IsSold == false) return null;  // Уже был возвращен
-
-        //    entity.IsSold = false;
-        //    var result = _repository.Update(entity);
-
-        //    if (result == null) return null;
-
-        //    return _mapper.Map<Ticket, TicketDto>(result);
-        //}
-
-
     }
 }

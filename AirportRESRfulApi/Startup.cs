@@ -34,16 +34,7 @@ namespace AirportRESRfulApi
             services.AddScoped<IValidator<TicketDto>, TicketsValidator>();
             services.AddScoped<IValidator<FlightDto>, FlightsValidator>();
 
-            // DAL 
-            //services.AddScoped<IGenericRepository<Ticket>, Repository<Ticket>();
-            //services.AddScoped<IRepository<Flight>, FlightsRepository>();
-            //services.AddScoped<IRepository<Departure>, DeparturesRepository>();
-            //services.AddScoped<IRepository<Crew>, CrewsRepository>();
-            //services.AddScoped<IRepository<Pilot>, PilotsRepository>();
-            //services.AddScoped<IRepository<Stewardess>, StewardessesRepository>();
-            //services.AddScoped<IRepository<Plane>, PlansRepository>();
-            //services.AddScoped<IRepository<PlaneType>, PlaneTypsRepository>();
-
+           
             // DAL Context
             services.AddDbContext<AirportContext>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -61,6 +52,7 @@ namespace AirportRESRfulApi
             //Maper
             services.AddScoped(_ => MapperConfiguration().CreateMapper());
 
+            //FluentValidation
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
         }
