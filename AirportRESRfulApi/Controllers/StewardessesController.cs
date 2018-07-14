@@ -16,47 +16,41 @@ namespace AirportRESRfulApi.Controllers
             _stewardessesSrvice = stewardessesSrvice;
         }
 
-        // GET api/Stewardesses
         [HttpGet]
-        public ActionResult<IEnumerable<StewardessDto>> Get()
+        public IActionResult Get()
         {
-            return _stewardessesSrvice.Get().ToList();
+            return Ok(_stewardessesSrvice.Get());
         }
 
-        // GET api/Stewardesses/2
         [HttpGet("{id}")]
-        public ActionResult<StewardessDto> Get(int id)
+        public IActionResult Get(int id)
         {
             var entity = _stewardessesSrvice.GetById(id);
 
             if (entity == null) return NotFound();
 
-            return entity;
+            return Ok(entity);
         }
 
-        // POST api/Stewardesses
         [HttpPost]
-        public ActionResult<StewardessDto> Post([FromBody] StewardessDto entity)
+        public IActionResult Post([FromBody] StewardessDto entity)
         {
-            return _stewardessesSrvice.Make(entity);
+            _stewardessesSrvice.Make(entity);
+            return Ok();
         }
 
-        // PUT api/Stewardesses/2
         [HttpPut("{id}")]
-        public StewardessDto Put(int id, [FromBody] StewardessDto entity)
+        public IActionResult Put(int id, [FromBody] StewardessDto entity)
         {
-            return _stewardessesSrvice.Update(entity);
+            _stewardessesSrvice.Update(entity);
+            return Ok();
         }
 
-        // DELETE api/Stewardesses/2
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            if(_stewardessesSrvice.Delete(id))
-            {
-                return Ok();
-            }
-            return NotFound();
+            _stewardessesSrvice.Delete(id);
+            return Ok();
         }
     }
 }

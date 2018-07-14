@@ -1,8 +1,6 @@
 ﻿using AirportRESRfulApi.BLL.Interfaces;
 using AirportRESRfulApi.Shared.DTO;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace AirportRESRfulApi.Controllers
 {
@@ -16,47 +14,41 @@ namespace AirportRESRfulApi.Controllers
             _pilotsSrvice = pilotsSrvice;
         }
 
-        // GET api/Tickets
         [HttpGet]
-        public ActionResult<IEnumerable<PilotDto>> Get()
+        public IActionResult Get()
         {
-            return _pilotsSrvice.Get().ToList();
+            return Ok(_pilotsSrvice.Get());
         }
 
-        // GET api/Tickets/2
         [HttpGet("{id}")]
-        public ActionResult<PilotDto> Get(int id)
+        public IActionResult Get(int id)
         {
             var ticket = _pilotsSrvice.GetById(id);
 
             if (ticket == null) return NotFound();
 
-            return _pilotsSrvice.GetById(id);
+            return Ok(_pilotsSrvice.GetById(id));
         }
 
-        // POST api/Tickets
         [HttpPost]
-        public ActionResult<PilotDto> Post([FromBody] PilotDto entity)
+        public IActionResult Post([FromBody] PilotDto entity)
         {
-            return _pilotsSrvice.Make(entity);
+            _pilotsSrvice.Make(entity);
+            return Ok();
         }
 
-        // PUT api/Tickets/2
         [HttpPut("{id}")]
-        public PilotDto Put(int id, [FromBody] PilotDto entity)
+        public IActionResult Put(int id, [FromBody] PilotDto entity)
         {
-            return _pilotsSrvice.Update(entity);
+            _pilotsSrvice.Update(entity);
+            return Ok();
         }
 
-        // DELETE api/Tickets/2
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            if(_pilotsSrvice.Delete(id))
-            {
-                return Ok();
-            }
-            return NotFound();
+            _pilotsSrvice.Delete(id);
+            return Ok();
         }
     }
 }

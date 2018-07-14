@@ -1,14 +1,10 @@
-﻿using AirportRESRfulApi.Shared.DTO;
-using System.Collections.Generic;
+﻿using AirportRESRfulApi.DAL.Models;
+using AirportRESRfulApi.Shared.DTO;
 
 namespace AirportRESRfulApi.BLL.Interfaces
 {
-    public interface IDeparturesService
+    public interface IDeparturesService : IService<Departure, DepartureDto>
     {
-        IEnumerable<DepartureDto> Get();
-        DepartureDto GetById(int id);
-        DepartureDto Make(DepartureDto entity);
-        DepartureDto Update(DepartureDto entity);
-        bool Delete(int id);
+      
     }
 }

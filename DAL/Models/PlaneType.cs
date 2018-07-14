@@ -8,5 +8,7 @@
         public int Capacity { set; get; }
         public int Range { set; get; }
         public TimeSpan ServiceLife { set; get; }
+
+        public int PlaneId { set; get; }
     }
 }

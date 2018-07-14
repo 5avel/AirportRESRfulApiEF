@@ -35,18 +35,18 @@ namespace AirportRESRfulApi
             services.AddScoped<IValidator<FlightDto>, FlightsValidator>();
 
             // DAL 
-            services.AddScoped<IRepository<Ticket>, TicketsRepository>();
-            services.AddScoped<IRepository<Flight>, FlightsRepository>();
-            services.AddScoped<IRepository<Departure>, DeparturesRepository>();
-            services.AddScoped<IRepository<Crew>, CrewsRepository>();
-            services.AddScoped<IRepository<Pilot>, PilotsRepository>();
-            services.AddScoped<IRepository<Stewardess>, StewardessesRepository>();
-            services.AddScoped<IRepository<Plane>, PlansRepository>();
-            services.AddScoped<IRepository<PlaneType>, PlaneTypsRepository>();
+            //services.AddScoped<IGenericRepository<Ticket>, Repository<Ticket>();
+            //services.AddScoped<IRepository<Flight>, FlightsRepository>();
+            //services.AddScoped<IRepository<Departure>, DeparturesRepository>();
+            //services.AddScoped<IRepository<Crew>, CrewsRepository>();
+            //services.AddScoped<IRepository<Pilot>, PilotsRepository>();
+            //services.AddScoped<IRepository<Stewardess>, StewardessesRepository>();
+            //services.AddScoped<IRepository<Plane>, PlansRepository>();
+            //services.AddScoped<IRepository<PlaneType>, PlaneTypsRepository>();
 
             // DAL Context
-            services.AddDbContext<AirportContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("AirportMSSQLlocaldb")));
+            services.AddDbContext<AirportContext>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             //BLL
             services.AddScoped<ITicketsService, TicketsService>();

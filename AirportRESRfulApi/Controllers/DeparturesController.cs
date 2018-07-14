@@ -18,45 +18,43 @@ namespace AirportRESRfulApi.Controllers
 
         // GET api/Flights
         [HttpGet]
-        public ActionResult<IEnumerable<DepartureDto>> Get()
+        public IActionResult Get()
         {
-            return _departuresSrvice.Get().ToList();
+            return Ok(_departuresSrvice.Get());
         }
 
         // GET api/Flights/2
         [HttpGet("{id}")]
-        public ActionResult<DepartureDto> Get(int id)
+        public IActionResult Get(int id)
         {
             var ticket = _departuresSrvice.GetById(id);
 
             if (ticket == null) return NotFound();
 
-            return _departuresSrvice.GetById(id);
+            return Ok(ticket);
         }
 
         // POST api/Flights
         [HttpPost]
-        public ActionResult<DepartureDto> Post([FromBody] DepartureDto entity)
+        public IActionResult Post([FromBody] DepartureDto entity)
         {
-            return _departuresSrvice.Make(entity);
+            _departuresSrvice.Make(entity);
+            return Ok();
         }
 
         // PUT api/Flights/2
         [HttpPut("{id}")]
-        public DepartureDto Put(int id, [FromBody] DepartureDto entity)
+        public IActionResult Put(int id, [FromBody] DepartureDto entity)
         {
-            return _departuresSrvice.Update(entity);
+            _departuresSrvice.Update(entity);
+            return Ok();
         }
 
         // DELETE api/Flights/2
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            if(_departuresSrvice.Delete(id))
-            {
-                return Ok();
-            }
-            return NotFound();
+            return Ok();
         }
     }
 }

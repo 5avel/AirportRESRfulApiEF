@@ -1,7 +1,6 @@
 ﻿using AirportRESRfulApi.BLL.Interfaces;
 using AirportRESRfulApi.Shared.DTO;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace AirportRESRfulApi.Controllers
@@ -16,47 +15,41 @@ namespace AirportRESRfulApi.Controllers
             _planeTypesService = planeTypesService;
         }
 
-        // GET api/Flights
         [HttpGet]
-        public ActionResult<IEnumerable<PlaneTypeDto>> Get()
+        public IActionResult Get()
         {
-            return _planeTypesService.Get().ToList();
+            return Ok(_planeTypesService.Get());
         }
 
-        // GET api/Flights/2
         [HttpGet("{id}")]
-        public ActionResult<PlaneTypeDto> Get(int id)
+        public IActionResult Get(int id)
         {
             var ticket = _planeTypesService.GetById(id);
 
             if (ticket == null) return NotFound();
 
-            return _planeTypesService.GetById(id);
+            return Ok(ticket);
         }
 
-        // POST api/Flights
         [HttpPost]
-        public ActionResult<PlaneTypeDto> Post([FromBody] PlaneTypeDto entity)
+        public IActionResult Post([FromBody] PlaneTypeDto entity)
         {
-            return _planeTypesService.Make(entity);
+            _planeTypesService.Make(entity);
+            return Ok();
         }
 
-        // PUT api/Flights/2
         [HttpPut("{id}")]
-        public PlaneTypeDto Put(int id, [FromBody] PlaneTypeDto entity)
+        public IActionResult Put(int id, [FromBody] PlaneTypeDto entity)
         {
-            return _planeTypesService.Update(entity);
+            _planeTypesService.Update(entity);
+            return Ok();
         }
 
-        // DELETE api/Flights/2
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            if(_planeTypesService.Delete(id))
-            {
-                return Ok();
-            }
-            return NotFound();
+            _planeTypesService.Delete(id);
+            return Ok();
         }
     }
 }

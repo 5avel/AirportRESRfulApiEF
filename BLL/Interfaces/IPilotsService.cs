@@ -1,14 +1,10 @@
-﻿using AirportRESRfulApi.Shared.DTO;
-using System.Collections.Generic;
+﻿using AirportRESRfulApi.DAL.Models;
+using AirportRESRfulApi.Shared.DTO;
 
 namespace AirportRESRfulApi.BLL.Interfaces
 {
-    public interface IPilotsService
+    public interface IPilotsService : IService<Pilot, PilotDto>
     {
-        IEnumerable<PilotDto> Get();
-        PilotDto GetById(int id);
-        PilotDto Make(PilotDto entity);
-        PilotDto Update(PilotDto entity);
-        bool Delete(int id);
+
     }
 }

@@ -1,7 +1,6 @@
 ﻿using AirportRESRfulApi.BLL.Interfaces;
 using AirportRESRfulApi.Shared.DTO;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace AirportRESRfulApi.Controllers
@@ -16,47 +15,40 @@ namespace AirportRESRfulApi.Controllers
             _flightsSrvice = flightsSrvice;
         }
 
-        // GET api/Flights
         [HttpGet]
-        public ActionResult<IEnumerable<FlightDto>> Get()
+        public IActionResult Get()
         {
-            return _flightsSrvice.Get().ToList();
+            return Ok(_flightsSrvice.Get());
         }
 
-        // GET api/Flights/2
         [HttpGet("{id}")]
-        public ActionResult<FlightDto> Get(int id)
+        public IActionResult Get(int id)
         {
             var ticket = _flightsSrvice.GetById(id);
 
             if (ticket == null) return NotFound();
 
-            return _flightsSrvice.GetById(id);
+            return Ok(ticket);
         }
 
-        // POST api/Flights
         [HttpPost]
-        public ActionResult<FlightDto> Post([FromBody] FlightDto entity)
+        public IActionResult Post([FromBody] FlightDto entity)
         {
-            return _flightsSrvice.Make(entity);
+            _flightsSrvice.Make(entity);
+            return Ok();
         }
 
-        // PUT api/Flights/2
         [HttpPut("{id}")]
-        public FlightDto Put(int id, [FromBody] FlightDto ticket)
+        public IActionResult Put(int id, [FromBody] FlightDto ticket)
         {
-            return _flightsSrvice.Update(ticket);
+            _flightsSrvice.Update(ticket);
+            return Ok();
         }
 
-        // DELETE api/Flights/2
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            if(_flightsSrvice.Delete(id))
-            {
-                return Ok();
-            }
-            return NotFound();
+            return Ok();
         }
     }
 }
