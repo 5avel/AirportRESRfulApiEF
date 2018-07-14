@@ -5,7 +5,7 @@
     {
         public int DepartureId { get; set; }
         public string Name { set; get; }
-        public int PlaneTypeID { set; get; }
+        public int PlaneTypeId { set; get; }
         public DateTime ReleaseDate { set; get; }
     }
 }
