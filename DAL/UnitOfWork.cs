@@ -9,6 +9,7 @@ namespace AirportRESRfulApi.DAL
     public class UnitOfWork : IUnitOfWork
     {
         protected readonly AirportContext context;
+        
 
         public UnitOfWork(AirportContext context)
         {
@@ -28,23 +29,27 @@ namespace AirportRESRfulApi.DAL
 
         public IRepository<TEntity> Set<TEntity>() where TEntity : Entity
         {
-            return new Repository<TEntity>(context);
+             return new Repository<TEntity>(context);
         }
 
-        public T GetRepository<T>() where T : IRepository<Entity>
+
+
+        private bool disposed = false;
+        public virtual void Dispose(bool disposing)
         {
-            foreach (Type type in this.GetType().GetTypeInfo().Assembly.GetTypes())
+            if (!this.disposed)
             {
-                if (typeof(T).GetTypeInfo().IsAssignableFrom(type) && type.GetTypeInfo().IsClass)
+                if (disposing)
                 {
-                    T repository = (T)Activator.CreateInstance(type);
-
-                    //repository.SetStorageContext(this.StorageContext);
-                    return repository;
+                    context.Dispose();
                 }
+                this.disposed = true;
             }
-
-            return default(T);
+        }
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }
