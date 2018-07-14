@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace AirportRESRfulApi.BLL.Services
 {
-    public class Service<TEntity, TEntityDto> : IService<TEntity, TEntityDto> where TEntity : Entity where TEntityDto : BaseDto
+    public abstract class Service<TEntity, TEntityDto> : IService<TEntity, TEntityDto> where TEntity : Entity where TEntityDto : BaseDto
     {
         protected IRepository<TEntity> _repository;
         protected IUnitOfWork _unitOfWork;

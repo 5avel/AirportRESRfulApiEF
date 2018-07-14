@@ -1,6 +1,8 @@
 ﻿using AirportRESRfulApi.DAL.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using System;
+using System.Collections.Generic;
 
 namespace AirportRESRfulApi.DAL
 {
@@ -18,20 +20,84 @@ namespace AirportRESRfulApi.DAL
             optionsBuilder.UseSqlServer(this.configuration.GetConnectionString("AirportMSSQLlocaldb"));
         }
 
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<Flight>().HasData(
+                new Flight
+                {
+                    Id = 1,
+                    FlightNumber = "QW11",
+                    DeparturePoint = "London",
+                    DepartureTime = Convert.ToDateTime("2018-07-13T08:22:56.6404304+03:00"),
+                    DestinationPoint = "Ukraine",
+                    ArrivalTime = Convert.ToDateTime("2018-07-13T08:22:56.6404304+03:00") + TimeSpan.FromHours(5),
+                },
+                new Flight
+                {
+                    Id = 2,
+                    FlightNumber = "QW12",
+                    DeparturePoint = "Ukraine",
+                    DepartureTime = Convert.ToDateTime("2018-07-13T08:22:56.6404304+03:00"),
+                    DestinationPoint = "London",
+                    ArrivalTime = Convert.ToDateTime("2018-07-13T08:22:56.6404304+03:00") + TimeSpan.FromHours(5),
+                }, new Flight
+                {
+                    Id = 3,
+                    FlightNumber = "QW13",
+                    DeparturePoint = "London",
+                    DepartureTime = Convert.ToDateTime("2018-07-13T08:22:56.6404304+03:00"),
+                    DestinationPoint = "Dnipro",
+                    ArrivalTime = Convert.ToDateTime("2018-07-13T08:22:56.6404304+03:00") + TimeSpan.FromHours(5),
+                });
+
+            builder.Entity<Ticket>().HasData(
+                        new Ticket { Id = 1,  FlightId = 1, FlightNumber = "QW11", IsSold = false, PlaseNumber = 1, Price = 200 },
+                        new Ticket { Id = 2,  FlightId = 1, FlightNumber = "QW11", IsSold = false, PlaseNumber = 2, Price = 200 },
+                        new Ticket { Id = 3,  FlightId = 1, FlightNumber = "QW11", IsSold = false, PlaseNumber = 3, Price = 200 },
+                        new Ticket { Id = 4,  FlightId = 1, FlightNumber = "QW11", IsSold = false, PlaseNumber = 4, Price = 200 },
+                        new Ticket { Id = 5,  FlightId = 1, FlightNumber = "QW11", IsSold = false, PlaseNumber = 5, Price = 200 },
+                        new Ticket { Id = 6,  FlightId = 1, FlightNumber = "QW11", IsSold = false, PlaseNumber = 6, Price = 200 },
+                        new Ticket { Id = 7,  FlightId = 1, FlightNumber = "QW11", IsSold = false, PlaseNumber = 7, Price = 200 },
+                        new Ticket { Id = 8,  FlightId = 1, FlightNumber = "QW11", IsSold = false, PlaseNumber = 8, Price = 200 },
+                        new Ticket { Id = 9,  FlightId = 2, FlightNumber = "KJ76", IsSold = false, PlaseNumber = 1, Price = 200 },
+                        new Ticket { Id = 10, FlightId = 2, FlightNumber = "KJ76", IsSold = false, PlaseNumber = 2, Price = 200 },
+                        new Ticket { Id = 11, FlightId = 2, FlightNumber = "KJ76", IsSold = false, PlaseNumber = 3, Price = 200 },
+                        new Ticket { Id = 12, FlightId = 2, FlightNumber = "KJ76", IsSold = false, PlaseNumber = 4, Price = 200 },
+                        new Ticket { Id = 13, FlightId = 2, FlightNumber = "KJ76", IsSold = false, PlaseNumber = 5, Price = 200 },
+                        new Ticket { Id = 14, FlightId = 2, FlightNumber = "KJ76", IsSold = false, PlaseNumber = 6, Price = 200 },
+                        new Ticket { Id = 15, FlightId = 3, FlightNumber = "ER86", IsSold = false, PlaseNumber = 1, Price = 200 },
+                        new Ticket { Id = 16, FlightId = 3, FlightNumber = "ER86", IsSold = false, PlaseNumber = 2, Price = 200 },
+                        new Ticket { Id = 17, FlightId = 3, FlightNumber = "ER86", IsSold = false, PlaseNumber = 3, Price = 200 },
+                        new Ticket { Id = 18, FlightId = 3, FlightNumber = "ER86", IsSold = false, PlaseNumber = 4, Price = 200 },
+                        new Ticket { Id = 19, FlightId = 3, FlightNumber = "ER86", IsSold = false, PlaseNumber = 5, Price = 200 },
+                        new Ticket { Id = 20, FlightId = 3, FlightNumber = "ER86", IsSold = false, PlaseNumber = 6, Price = 200 }
+                       );
+
+            builder.Entity<Departure>().HasData(
+                new Departure { Id = 1, FlightId = 1, FlightNumber = "QW11", DepartureTime = Convert.ToDateTime("2018-07-13T08:22:56.6404304+03:00") },
+                new Departure { Id = 2, FlightId = 2, FlightNumber = "KJ76", DepartureTime = Convert.ToDateTime("2018-07-13T08:22:56.6404304+03:00") },
+                new Departure { Id = 3, FlightId = 3, FlightNumber = "ER86", DepartureTime = Convert.ToDateTime("2018-07-13T08:22:56.6404304+03:00") }
+                );
+        }
+
+
+
         
+
+
 
         public DbSet<Flight> Flights { get; set; }
 
-            public DbSet<Ticket> Tickets { get; set; }
+        public DbSet<Ticket> Tickets { get; set; }
 
-            public DbSet<Departure> Departures { get; set; }
+        public DbSet<Departure> Departures { get; set; }
 
-                public DbSet<Plane> Planes { get; set; }
-                    public DbSet<PlaneType> PlaneTypes { get; set; }
+        public DbSet<Plane> Planes { get; set; }
+        public DbSet<PlaneType> PlaneTypes { get; set; }
 
-                public DbSet<Crew> Crews { get; set; }
+        public DbSet<Crew> Crews { get; set; }
 
-                    public DbSet<Pilot> Pilots { get; set; }
-                    public DbSet<Stewardess> Stewardesses { get; set; }
+        public DbSet<Pilot> Pilots { get; set; }
+        public DbSet<Stewardess> Stewardesses { get; set; }
     }
 }

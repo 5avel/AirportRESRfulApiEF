@@ -1,9 +1,12 @@
 ﻿namespace AirportRESRfulApi.DAL.Models
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
     public class Plane : Entity
     {
+        [Required, MaxLength(50)]
         public string Name { set; get; }
+        [Required]
         public DateTime ReleaseDate { set; get; }
 
 
